@@ -12,6 +12,21 @@ class PlantsController < ApplicationController
     render json: plant
   end
 
+  def update
+    plant = Plant.find(params[:id])
+    if plant.update(plant_params)
+      render json: plant
+    else
+      render json: { errors: plant.errors }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    plant = Plant.find(params[:id])
+    plant.destroy
+    head :no_content
+  end
+
   # POST /plants
   def create
     plant = Plant.create(plant_params)
